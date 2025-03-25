@@ -125,6 +125,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteGroup(Group group) {
+        addressBook.removeGroup(group);
+    }
+
+    @Override
     public ObservableList<Group> getFilteredGroupList() {
         return filteredGroups;
     }

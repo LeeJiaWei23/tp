@@ -103,6 +103,12 @@ public interface Model {
     void addGroup(Group group);
 
     /**
+     * Deletes the given group.
+     * The group must exist in the address book.
+     */
+    void deleteGroup(Group group);
+
+    /**
      * Returns an unmodifiable view of the filtered group list
      */
     ObservableList<Group> getFilteredGroupList();

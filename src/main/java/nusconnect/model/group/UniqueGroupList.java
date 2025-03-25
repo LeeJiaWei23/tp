@@ -9,6 +9,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import nusconnect.model.group.exceptions.DuplicateGroupException;
+import nusconnect.model.group.exceptions.GroupNotFoundException;
 
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
@@ -40,6 +41,17 @@ public class UniqueGroupList implements Iterable<Group> {
             throw new DuplicateGroupException();
         }
         internalList.add(toAdd);
+    }
+
+    /**
+     * Removes the equivalent group from the list.
+     * The group must exist in the list.
+     */
+    public void remove(Group toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new GroupNotFoundException();
+        }
     }
 
     /**

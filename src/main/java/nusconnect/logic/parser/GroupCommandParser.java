@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import nusconnect.logic.commands.Command;
 import nusconnect.logic.commands.GroupCommand;
 import nusconnect.logic.commands.GroupCreateCommand;
+import nusconnect.logic.commands.GroupDeleteCommand;
 import nusconnect.logic.parser.exceptions.ParseException;
 
 /**
@@ -37,6 +38,9 @@ public class GroupCommandParser implements Parser<Command> {
         switch (subCommand) {
         case GroupCreateCommand.COMMAND_WORD:
             return new GroupCreateCommandParser().parse(arguments);
+
+        case GroupDeleteCommand.COMMAND_WORD:
+            return new GroupDeleteCommandParser().parse(arguments);
 
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
