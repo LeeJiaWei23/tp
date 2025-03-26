@@ -3,8 +3,8 @@ package nusconnect.logic.parser;
 import static nusconnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusconnect.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static nusconnect.testutil.Assert.assertThrows;
-import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST;
+import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,9 +54,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
         List<Index> targetedIndices = new ArrayList<Index>();
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_FIRST);
         assertEquals(new DeleteCommand(targetedIndices), command);
     }
 
@@ -64,11 +64,11 @@ public class AddressBookParserTest {
     public void parseCommand_deleteMultiple() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD
-                        + " " + INDEX_FIRST_PERSON.getOneBased()
-                        + " " + INDEX_SECOND_PERSON.getOneBased());
+                        + " " + INDEX_FIRST.getOneBased()
+                        + " " + INDEX_SECOND.getOneBased());
         List<Index> targetedIndices = new ArrayList<Index>();
-        targetedIndices.add(INDEX_SECOND_PERSON);
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_SECOND);
+        targetedIndices.add(INDEX_FIRST);
         assertEquals(new DeleteCommand(targetedIndices), command);
     }
 
@@ -77,8 +77,8 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST, descriptor), command);
     }
 
     @Test
@@ -111,8 +111,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_view() throws Exception {
         ViewCommand command = (ViewCommand) parser.parseCommand(
-                ViewCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new ViewCommand(INDEX_FIRST_PERSON), command);
+                ViewCommand.COMMAND_WORD + " " + INDEX_FIRST.getOneBased());
+        assertEquals(new ViewCommand(INDEX_FIRST), command);
     }
 
     @Test

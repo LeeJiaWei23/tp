@@ -1,6 +1,7 @@
 package nusconnect.testutil;
 
 import nusconnect.model.AddressBook;
+import nusconnect.model.group.Group;
 import nusconnect.model.person.Person;
 
 /**
@@ -25,6 +26,14 @@ public class AddressBookBuilder {
      */
     public AddressBookBuilder withPerson(Person person) {
         addressBook.addPerson(person);
+        return this;
+    }
+
+    /**
+     * Adds the given {@code Group} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withGroup(Group group) {
+        addressBook.addGroup(group);
         return this;
     }
 

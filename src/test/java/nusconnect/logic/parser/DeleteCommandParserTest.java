@@ -3,8 +3,8 @@ package nusconnect.logic.parser;
 import static nusconnect.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusconnect.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusconnect.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST;
+import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +28,15 @@ public class DeleteCommandParserTest {
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
         List<Index> targetedIndices = new ArrayList<Index>();
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_FIRST);
         assertParseSuccess(parser, "1", new DeleteCommand(targetedIndices));
     }
 
     @Test
     public void parse_validArgsMultiple_returnsDeleteCommand() {
         List<Index> targetedIndices = new ArrayList<Index>();
-        targetedIndices.add(INDEX_SECOND_PERSON);
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_SECOND);
+        targetedIndices.add(INDEX_FIRST);
         assertParseSuccess(parser, "1 2", new DeleteCommand(targetedIndices));
         assertParseSuccess(parser, "2 1", new DeleteCommand(targetedIndices));
         assertParseSuccess(parser, "1 1 2", new DeleteCommand(targetedIndices));

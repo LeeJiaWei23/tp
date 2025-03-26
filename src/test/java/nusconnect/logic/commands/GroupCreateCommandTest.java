@@ -1,5 +1,7 @@
 package nusconnect.logic.commands;
 
+import static nusconnect.logic.commands.CommandTestUtil.VALID_GROUP_NAME_CCA;
+import static nusconnect.logic.commands.CommandTestUtil.VALID_GROUP_NAME_CS2100;
 import static nusconnect.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusconnect.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusconnect.testutil.TypicalPersons.getTypicalAddressBook;
@@ -28,58 +30,54 @@ public class GroupCreateCommandTest {
 
     @Test
     public void execute_newGroup_success() {
-        String validGroupName = "CS2103T";
-        GroupCreateCommand groupCreateCommand = new GroupCreateCommand(validGroupName);
 
-        String expectedMessage = String.format(GroupCreateCommand.MESSAGE_SUCCESS, validGroupName);
+        GroupCreateCommand groupCreateCommand = new GroupCreateCommand(VALID_GROUP_NAME_CS2100);
 
-        expectedModel.addGroup(new Group(validGroupName));
+        String expectedMessage = String.format(GroupCreateCommand.MESSAGE_SUCCESS, VALID_GROUP_NAME_CS2100);
+
+        expectedModel.addGroup(new Group(VALID_GROUP_NAME_CS2100));
 
         assertCommandSuccess(groupCreateCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_duplicateGroup_throwsCommandException() {
-        String validGroupName = "CS2103T";
 
         // First add the group to the model
-        model.addGroup(new Group(validGroupName));
+        model.addGroup(new Group(VALID_GROUP_NAME_CCA));
 
         // Try to add the same group again
-        GroupCreateCommand groupCreateCommand = new GroupCreateCommand(validGroupName);
+        GroupCreateCommand groupCreateCommand = new GroupCreateCommand(VALID_GROUP_NAME_CCA);
 
         assertCommandFailure(groupCreateCommand, model, GroupCreateCommand.MESSAGE_DUPLICATE_GROUP);
     }
 
     @Test
     public void equals() {
-        String cs2103 = "CS2103";
-        String cs2106 = "CS2106";
-        GroupCreateCommand addCs2103Command = new GroupCreateCommand(cs2103);
-        GroupCreateCommand addCs2106Command = new GroupCreateCommand(cs2106);
+        GroupCreateCommand addCs2100Command = new GroupCreateCommand(VALID_GROUP_NAME_CS2100);
+        GroupCreateCommand addCcaCommand = new GroupCreateCommand(VALID_GROUP_NAME_CCA);
 
         // same object -> returns true
-        assertTrue(addCs2103Command.equals(addCs2103Command));
+        assertTrue(addCs2100Command.equals(addCs2100Command));
 
         // same values -> returns true
-        GroupCreateCommand addCs2103CommandCopy = new GroupCreateCommand(cs2103);
-        assertTrue(addCs2103Command.equals(addCs2103CommandCopy));
+        GroupCreateCommand addCs2100CommandCopy = new GroupCreateCommand(VALID_GROUP_NAME_CS2100);
+        assertTrue(addCs2100Command.equals(addCs2100CommandCopy));
 
         // different types -> returns false
-        assertFalse(addCs2103Command.equals(1));
+        assertFalse(addCs2100Command.equals(1));
 
         // null -> returns false
-        assertFalse(addCs2103Command.equals(null));
+        assertFalse(addCs2100Command.equals(null));
 
         // different group -> returns false
-        assertFalse(addCs2103Command.equals(addCs2106Command));
+        assertFalse(addCs2100Command.equals(addCcaCommand));
     }
 
     @Test
     public void toStringMethod() {
-        String groupName = "CS2103T";
-        GroupCreateCommand command = new GroupCreateCommand(groupName);
-        String expected = GroupCreateCommand.class.getCanonicalName() + "{groupName=" + groupName + "}";
+        GroupCreateCommand command = new GroupCreateCommand(VALID_GROUP_NAME_CS2100);
+        String expected = GroupCreateCommand.class.getCanonicalName() + "{groupName=" + VALID_GROUP_NAME_CS2100 + "}";
         assertEquals(expected, command.toString());
     }
 }

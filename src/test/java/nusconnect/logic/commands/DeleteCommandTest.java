@@ -3,8 +3,8 @@ package nusconnect.logic.commands;
 import static nusconnect.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusconnect.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusconnect.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST;
+import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND;
 import static nusconnect.testutil.TypicalPersons.getTypicalAddressBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -32,9 +32,9 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST.getZeroBased());
         List<Index> targetedIndices = new ArrayList<Index>();
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_FIRST);
         DeleteCommand deleteCommand = new DeleteCommand(targetedIndices);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
@@ -48,11 +48,11 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndicesUnfilteredList_success() {
-        Person firstPersonToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person secondPersonToDelete = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        Person firstPersonToDelete = model.getFilteredPersonList().get(INDEX_FIRST.getZeroBased());
+        Person secondPersonToDelete = model.getFilteredPersonList().get(INDEX_SECOND.getZeroBased());
         List<Index> targetedIndices = new ArrayList<Index>();
-        targetedIndices.add(INDEX_SECOND_PERSON);
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_SECOND);
+        targetedIndices.add(INDEX_FIRST);
         DeleteCommand deleteCommand = new DeleteCommand(targetedIndices);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
@@ -69,7 +69,7 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Person firstPersonToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person firstPersonToDelete = model.getFilteredPersonList().get(INDEX_FIRST.getZeroBased());
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         List<Index> targetedIndices = new ArrayList<Index>();
         targetedIndices.add(outOfBoundIndex);
@@ -83,7 +83,7 @@ public class DeleteCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         List<Index> targetedIndices = new ArrayList<Index>();
         targetedIndices.add(outOfBoundIndex);
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_FIRST);
         DeleteCommand deleteCommand = new DeleteCommand(targetedIndices);
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -91,11 +91,11 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST);
 
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST.getZeroBased());
         List<Index> targetedIndices = new ArrayList<Index>();
-        targetedIndices.add(INDEX_FIRST_PERSON);
+        targetedIndices.add(INDEX_FIRST);
         DeleteCommand deleteCommand = new DeleteCommand(targetedIndices);
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
@@ -110,9 +110,9 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showPersonAtIndex(model, INDEX_FIRST);
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundIndex = INDEX_SECOND;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
@@ -126,14 +126,14 @@ public class DeleteCommandTest {
     @Test
     public void equals() {
         List<Index> firstTargetedIndices = new ArrayList<Index>();
-        firstTargetedIndices.add(INDEX_FIRST_PERSON);
+        firstTargetedIndices.add(INDEX_FIRST);
         DeleteCommand deleteFirstCommand = new DeleteCommand(firstTargetedIndices);
         List<Index> secondTargetedIndices = new ArrayList<Index>();
-        secondTargetedIndices.add(INDEX_SECOND_PERSON);
+        secondTargetedIndices.add(INDEX_SECOND);
         DeleteCommand deleteSecondCommand = new DeleteCommand(secondTargetedIndices);
         List<Index> thirdTargetedIndices = new ArrayList<Index>();
-        thirdTargetedIndices.add(INDEX_SECOND_PERSON);
-        thirdTargetedIndices.add(INDEX_FIRST_PERSON);
+        thirdTargetedIndices.add(INDEX_SECOND);
+        thirdTargetedIndices.add(INDEX_FIRST);
         DeleteCommand deleteThirdCommand = new DeleteCommand(thirdTargetedIndices);
 
         // same object -> returns true
@@ -141,7 +141,7 @@ public class DeleteCommandTest {
 
         // same values -> returns true
         List<Index> firstTargetedIndicesCopy = new ArrayList<Index>();
-        firstTargetedIndicesCopy.add(INDEX_FIRST_PERSON);
+        firstTargetedIndicesCopy.add(INDEX_FIRST);
         DeleteCommand deleteFirstCommandCopy = new DeleteCommand(firstTargetedIndicesCopy);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 

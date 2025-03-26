@@ -49,9 +49,9 @@ import static nusconnect.logic.parser.CliSyntax.PREFIX_MODULE;
 import static nusconnect.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusconnect.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusconnect.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static nusconnect.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static nusconnect.testutil.TypicalIndexes.INDEX_FIRST;
+import static nusconnect.testutil.TypicalIndexes.INDEX_SECOND;
+import static nusconnect.testutil.TypicalIndexes.INDEX_THIRD;
 
 import org.junit.jupiter.api.Test;
 
@@ -136,7 +136,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
+        Index targetIndex = INDEX_SECOND;
         String userInput = targetIndex.getOneBased()
                 + NAME_DESC_AMY + PHONE_DESC_BOB + EMAIL_DESC_AMY
                 + ALIAS_DESC_BOB + COURSE_DESC_BOB + NOTE_DESC_BOB
@@ -163,7 +163,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + EMAIL_DESC_AMY;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
@@ -176,7 +176,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_oneFieldSpecified_success() {
         // name
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD;
         String userInput = targetIndex.getOneBased() + NAME_DESC_AMY;
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -238,7 +238,7 @@ public class EditCommandParserTest {
         // AddCommandParserTest#parse_repeatedNonTagValue_failure()
 
         // valid followed by invalid
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST;
         String userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + PHONE_DESC_BOB;
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
@@ -268,7 +268,7 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_resetTags_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
