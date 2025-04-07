@@ -53,13 +53,7 @@ traditional address book!
 
 ## Command summary
 
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Commands Table</title>
-</head>
-<body>
-  <table border="1" cellspacing="0" cellpadding="5">
+<table border="1" cellspacing="0" cellpadding="5">
     <thead>
       <tr>
         <th>Action</th>
@@ -208,9 +202,7 @@ traditional address book!
         </td>
       </tr>
     </tbody>
-  </table>
-</body>
-</html>
+</table>
 
 * [Back to top](#nusconnect)
 
